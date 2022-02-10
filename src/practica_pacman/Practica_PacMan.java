@@ -50,7 +50,9 @@ public class Practica_PacMan {
 
         int filaInicial = 0;
         int columnaInicial = 0;
-
+        
+        int vidas = 3;
+        String estado;
         tableroG[posActualPacX][posActualPacY] = PACMAN;
 
         while (!salir) {
@@ -136,6 +138,9 @@ public class Practica_PacMan {
                                          premioEspecial;
                                         premioEspecial = randomPremios;
                                         premioSimple = numeroPremios - randomPremios;
+                                        int premioEspecial2 = premioEspecial;
+                                        int premioSimple2 = premioSimple;
+
                                         int fila,
                                          columna;
                                         rellenarMatriz(tableroG);
@@ -175,6 +180,15 @@ public class Practica_PacMan {
                                             }
 
                                         }
+
+                                        //Puntajes
+                                        int puntajePremioSimple = premioSimple2 * 10;
+                                        int puntajePremioEspecialpremio = premioEspecial2 * 15;
+                                        int puntajeMaximo = puntajePremioSimple + puntajePremioEspecialpremio;
+                                        int simple = 0,
+                                         especial = 0;
+
+                                        //fin puntajes
                                         mostrarMatriz(tableroG);
                                         salirIngresarPosicion = false;
                                         while (!salirIngresarPosicion) {
@@ -211,8 +225,12 @@ public class Practica_PacMan {
                                         boolean salirTableroG = false;
 
                                         while (!salirTableroG) {
+                                            int puntajeObtenido = simple + especial;
                                             System.out.println("Nombre del jugador: " + usuario);
+                                            System.out.println("Numero de vidas: " + vidas);
+                                            System.out.println("Puntaje:" + puntajeObtenido);
                                             mostrarMatriz(tableroG);
+
                                             try {
                                                 posAntiguaPacX = posActualPacX;
                                                 posAntiguaPacY = posActualPacY;
@@ -238,18 +256,63 @@ public class Practica_PacMan {
                                                         break;
                                                     case "f":
                                                         salirTableroG = true;
+                                                        
                                                         //salirIniciarJuego = true;
                                                         break;
                                                     default:
                                                         System.out.println("Elige una opcion correcta");
+                                                    //Al precionar otro numero desaparece el pacman
+                                                    //posAntiguaPacX = posActualPacX;
+                                                    //posAntiguaPacY = posActualPacY;
                                                 }
+                                                //Perdiendo Vidas
+                                                if (tableroG[posActualPacX][posActualPacY].equals(FANTASMA)) {
+                                                    vidas--;
+                                                }
+                                                if (vidas == 0) {
+                                                    System.out.println("=======================");
+                                                    System.out.println("      HAS PERDIDO      ");
+                                                    System.out.println("   SUERTE LA PROXIMA   ");
+                                                    System.out.println("=======================");
+                                                    System.out.println("");
+                                                    System.out.println("");
+                                                    salirTableroG = true;
+                                                    estado="DERROTA";
+                                                }
+                                                //Ganando por premios
+                                                //PREMIO SIMPLE 10
+                                                //PREMIO ESPECIAL 15    
 
-                                                if (estaDentroMatriz(tableroG.length, tableroG[0].length, posActualPacX, posActualPacY)&& !tableroG[posActualPacX][posActualPacY].equals(PARED)) {
-                                                    
+                                                if (tableroG[posActualPacX][posActualPacY].equals(PREMIOSIMPLE)) {
+                                                    simple = simple + 10;
+                                                }
+                                                if (tableroG[posActualPacX][posActualPacY].equals(PREMIOESPECIAL)) {
+                                                    especial = especial + 15;
+                                                }
+                                                puntajeObtenido = simple + especial;
+                                                if (puntajeObtenido == puntajeMaximo) {
+
+                                                    System.out.println("=======================");
+                                                    System.out.println("      FELICIDADES      ");
+                                                    System.out.println("      HAS GANADO       ");
+                                                    System.out.println("      Puntaje: " + puntajeObtenido);
+                                                    System.out.println("=======================");
+                                                    System.out.println("");
+                                                    System.out.println("");
+                                                    estado = "VICTORIA";
+                                                    salirTableroG = true;
+                                                }
+                                                /// Fin premio Especial
+                                                if (estaDentroMatriz(tableroG.length, tableroG[0].length, posActualPacX, posActualPacY) && !tableroG[posActualPacX][posActualPacY].equals(PARED)) {
+
                                                     tableroG[posActualPacX][posActualPacY] = PACMAN;
                                                     tableroG[posAntiguaPacX][posAntiguaPacY] = " ";
-                                                } else {
+
+                                                    //} else if (estaDentroMatriz(tableroG.length, tableroG[0].length, posActualPacX, posActualPacY)) {
                                                     //System.out.println("Te sales del tablero");
+                                                    // posActualPacX = posAntiguaPacX;
+                                                    // posActualPacY = posAntiguaPacY;
+                                                } else {
                                                     posActualPacX = posAntiguaPacX;
                                                     posActualPacY = posAntiguaPacY;
                                                 }
