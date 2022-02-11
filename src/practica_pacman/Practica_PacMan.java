@@ -49,6 +49,9 @@ public class Practica_PacMan {
         int numeroPremios = 0;
         int numeroParedes = 0;
         int numeroTrampas = 0;
+        int numeroPremiosP = 0;
+        int numeroParedesP = 0;
+        int numeroTrampasP = 0;
 
         int filaInicial = 0;
         int columnaInicial = 0;
@@ -66,9 +69,6 @@ public class Practica_PacMan {
         tableroG[posActualPacX][posActualPacY] = PACMAN;
 
         while (!salir) {
-            contadorPuntaje++;
-            contadorNombre++;
-            contadorEstado++;
 
             System.out.println("======= MENU PRINCIPAL ========");
             System.out.println("1. Iniciar Juego");
@@ -86,7 +86,7 @@ public class Practica_PacMan {
                         System.out.println("1. Iniciar Juego");
                         System.out.println("Ingrese nombre del usuario");
                         usuario = sc.next();
-
+                        partidaAlmacenadaNombre[contadorNombre] = usuario;
                         System.out.println("======= Especificar Tablero ========");
 
                         String sizeTablero = "";
@@ -97,6 +97,7 @@ public class Practica_PacMan {
                                 switch (sizeTablero) {
                                     case "g":
                                         System.out.println("Elegiste tablero grande");
+                                        vidas = 3;
                                         salirNumeroPremios = false;
                                         while (!salirNumeroPremios) {
                                             try {
@@ -286,6 +287,9 @@ public class Practica_PacMan {
                                                                         salirPausa = true;
                                                                         break;
                                                                     case 2:
+                                                                        for (int i = 0; i < 10; i++) {
+                                                                            System.out.println(partidaAlmacenadaNombre[i]);
+                                                                        }
                                                                         for (int i = 0; i < partidaAlmacenadaPuntaje.length; i++) {
                                                                             System.out.println("");
                                                                             partidaAlmacenadaPuntaje[contadorPuntaje] = puntajeObtenido;
@@ -299,6 +303,12 @@ public class Practica_PacMan {
                                                                         salirPausa = true;
                                                                         salirTableroG = true;
                                                                         estado = "RENUNCIA";
+                                                                        partidaAlmacenadaEstado[contadorEstado] = estado;
+                                                                        partidaAlmacenadaPuntaje[contadorPuntaje] = puntajeObtenido;
+                                                                        contadorNombre++;
+                                                                        contadorPuntaje++;
+
+                                                                        contadorEstado++;
                                                                         break;
                                                                     default:
                                                                         System.out.println("Ingresa una opcion correcta");
@@ -327,8 +337,15 @@ public class Practica_PacMan {
                                                     System.out.println("=======================");
                                                     System.out.println("");
                                                     System.out.println("");
-                                                    salirTableroG = true;
                                                     estado = "DERROTA";
+                                                    partidaAlmacenadaEstado[contadorEstado] = estado;
+                                                    partidaAlmacenadaPuntaje[contadorPuntaje] = puntajeObtenido;
+                                                    contadorNombre++;
+                                                    contadorPuntaje++;
+
+                                                    contadorEstado++;
+                                                    salirTableroG = true;
+
                                                 }
                                                 //Ganando por premios
                                                 //PREMIO SIMPLE 10
@@ -350,7 +367,14 @@ public class Practica_PacMan {
                                                     System.out.println("=======================");
                                                     System.out.println("");
                                                     System.out.println("");
+
                                                     estado = "VICTORIA";
+                                                    partidaAlmacenadaEstado[contadorEstado] = estado;
+                                                    partidaAlmacenadaPuntaje[contadorPuntaje] = puntajeObtenido;
+                                                    contadorNombre++;
+                                                    contadorPuntaje++;
+
+                                                    contadorEstado++;
                                                     salirTableroG = true;
                                                 }
                                                 /// Fin premio Especial
@@ -376,10 +400,314 @@ public class Practica_PacMan {
                                         break;
                                     case "p":
                                         System.out.println("Elegiste tablero pequeño");
+                                        //rellenarMatriz(tableroP);
+                                        //mostrarMatriz(tableroP);
+                                        //salirIniciarJuego = true;
+                                        vidas = 3;
+                                        salirNumeroPremios = false;
+                                        while (!salirNumeroPremios) {
+                                            try {
+                                                System.out.println("Ingrese numero de Premios [1-12]");
+                                                numeroPremiosP = sc.nextInt();
+                                                if (numeroPremiosP < 1 || numeroPremiosP > 12) {
+                                                    System.out.println("Ingrese un numero entre 1 y 12");
+                                                } else {
+                                                    salirNumeroPremios = true;
+                                                }
+                                            } catch (Exception e) {
+                                                System.out.println("Debes insertar un número");
+                                                sc.next();
+                                            }
+                                        }
+
+                                        // System.out.println("Ingrese numero de Premios [1-40]");
+                                        //numeroPremios = sc.nextInt();
+                                        salirNumeroParedes = false;
+                                        while (!salirNumeroParedes) {
+                                            try {
+                                                System.out.println("Ingrese numero de Paredes [1-6]");
+                                                numeroParedesP = sc.nextInt();
+                                                if (numeroParedesP < 1 || numeroParedesP > 6) {
+                                                    System.out.println("Ingrese un numero entre 1 y 6");
+                                                } else {
+                                                    salirNumeroParedes = true;
+                                                }
+                                            } catch (Exception e) {
+                                                System.out.println("Debes insertar un número");
+                                                sc.next();
+                                            }
+                                        }
+                                        salirNumeroTrampas = false;
+                                        while (!salirNumeroTrampas) {
+                                            try {
+                                                System.out.println("Ingrese numero de Trampas [1-6]");
+                                                numeroTrampasP = sc.nextInt();
+                                                if (numeroTrampasP < 1 || numeroTrampasP > 6) {
+                                                    System.out.println("Ingrese un numero entre 1 y 6");
+                                                } else {
+                                                    salirNumeroTrampas = true;
+                                                }
+                                            } catch (Exception e) {
+                                                System.out.println("Debes insertar un número");
+                                                sc.next();
+                                            }
+                                        }
+
+                                        int randomPremiosP = generaNumeroRandom(1, numeroPremiosP);
+                                        int premioSimpleP,
+                                         premioEspecialP;
+                                        premioEspecialP = randomPremiosP;
+                                        premioSimpleP = numeroPremiosP - randomPremiosP;
+                                        int premioEspecial2P = premioEspecialP;
+                                        int premioSimple2P = premioSimpleP;
+
+                                        int filaP,
+                                         columnaP;
                                         rellenarMatriz(tableroP);
+
+                                        while (premioEspecialP > 0) {
+                                            filaP = generaNumeroRandom(1, 6);
+                                            columnaP = generaNumeroRandom(1, 7);
+                                            if (tableroP[filaP][columnaP].equals(" ")) {
+                                                tableroP[filaP][columnaP] = PREMIOESPECIAL;
+                                                premioEspecialP--;
+                                            } else {
+                                            }
+
+                                        }
+                                        while (premioSimpleP > 0) {
+                                            filaP = generaNumeroRandom(1, 6);
+                                            columnaP = generaNumeroRandom(1, 7);
+                                            if (tableroP[filaP][columnaP].equals(" ")) {
+                                                tableroP[filaP][columnaP] = PREMIOSIMPLE;
+                                                premioSimpleP--;
+                                            }
+                                        }
+                                        while (numeroParedesP > 0) {
+                                            filaP = generaNumeroRandom(1, 6);
+                                            columnaP = generaNumeroRandom(1, 7);
+                                            if (tableroP[filaP][columnaP].equals(" ")) {
+                                                tableroP[filaP][columnaP] = PARED;
+                                                numeroParedesP--;
+                                            }
+                                        }
+                                        while (numeroTrampasP > 0) {
+                                            filaP = generaNumeroRandom(1, 6);
+                                            columnaP = generaNumeroRandom(1, 7);
+                                            if (tableroP[filaP][columnaP].equals(" ")) {
+                                                tableroP[filaP][columnaP] = FANTASMA;
+                                                numeroTrampasP--;
+                                            }
+
+                                        }
+
+                                        //Puntajes
+                                        int puntajePremioSimpleP = premioSimple2P * 10;
+                                        int puntajePremioEspecialpremioP = premioEspecial2P * 15;
+                                        int puntajeMaximoP = puntajePremioSimpleP + puntajePremioEspecialpremioP;
+                                        int simpleP = 0,
+                                         especialP = 0;
+
+                                        //fin puntajes
                                         mostrarMatriz(tableroP);
-                                        salirIniciarJuego = true;
+                                        salirIngresarPosicion = false;
+                                        while (!salirIngresarPosicion) {
+                                            try {
+                                                System.out.println("Ingrese una posicion libre donde quiera comenzar");
+                                                System.out.println("Ingrese numero de fila");
+                                                filaInicial = sc.nextInt() + 1;
+                                                System.out.println("Ingrese numeo de columna");
+                                                columnaInicial = sc.nextInt() + 1;
+                                                if (!tableroP[filaInicial][columnaInicial].equals(FANTASMA) && !tableroP[filaInicial][columnaInicial].equals(PARED) && !tableroP[filaInicial][columnaInicial].equals(PREMIOESPECIAL) && !tableroP[filaInicial][columnaInicial].equals(PREMIOSIMPLE) && !tableroP[filaInicial][columnaInicial].equals("-") && !tableroP[filaInicial][columnaInicial].equals("|")) {
+                                                    posActualPacX = filaInicial;
+                                                    posActualPacY = columnaInicial;
+                                                    posAntiguaPacX = filaInicial;
+                                                    posAntiguaPacY = columnaInicial;
+                                                    salirIngresarPosicion = true;
+                                                } else {
+                                                    System.out.println("Ingrese coordenadas validas");
+                                                }
+                                            } catch (Exception e) {
+                                                System.out.println("Debes insertar un número ");
+                                                sc.next();
+                                            }
+                                        }
+
+                                        tableroG[posActualPacX][posActualPacY] = PACMAN;
+
+                                        //mostrarMatriz(tableroG);
+                                        boolean salirTableroP = false;
+
+                                        while (!salirTableroP) {
+
+                                            tableroP[posActualPacX][posActualPacY] = PACMAN;//Sirve para que vuelva a aparecer el pacman si se ingresa opcion erronea o al poner pausa yregresar
+                                            puntajeObtenido = simpleP + especialP;
+                                            System.out.println("Nombre del jugador: " + usuario);
+                                            System.out.println("Numero de vidas: " + vidas);
+                                            System.out.println("Puntaje:" + puntajeObtenido);
+                                            mostrarMatriz(tableroP);
+
+                                            try {
+                                                posAntiguaPacX = posActualPacX;
+                                                posAntiguaPacY = posActualPacY;
+                                                System.out.println("8. Mover hacia arriba");
+                                                System.out.println("5. Mover hacia abajo");
+                                                System.out.println("6. Mover hacia la derecha");
+                                                System.out.println("4. Mover hacia la izquierda");
+                                                System.out.println("F. Pausa");
+
+                                                String movimiento = sc.next().toLowerCase().trim();
+                                                switch (movimiento) {
+                                                    case "8":
+                                                        posActualPacX--;
+                                                        break;
+                                                    case "5":
+                                                        posActualPacX++;
+                                                        break;
+                                                    case "6":
+                                                        posActualPacY++;
+                                                        break;
+                                                    case "4":
+                                                        posActualPacY--;
+                                                        break;
+                                                    case "f":
+                                                        salirPausa = false;
+                                                        while (!salirPausa) {
+                                                            System.out.println("============ PAUSA ============");
+                                                            System.out.println("Por favor, seleccione una opcion");
+                                                            System.out.println("1. Regresar");
+                                                            System.out.println("2. Ver Historial de Partidas");
+                                                            System.out.println("3. Terminar Partida");
+                                                            System.out.println("===============================");
+
+                                                            try {
+
+                                                                opcionMenuPausa = sc.nextInt();
+                                                                switch (opcionMenuPausa) {
+                                                                    case 1:
+                                                                        salirPausa = true;
+                                                                        break;
+                                                                    case 2:
+
+                                                                        /*
+                                                                         for (int i = 0; i < partidaAlmacenadaPuntaje.length; i++) {
+                                                                            System.out.println("");
+                                                                            partidaAlmacenadaPuntaje[contadorPuntaje] = puntajeObtenido;
+
+                                                                        }
+                                                                        for (int i = 0; i < partidaAlmacenadaPuntaje.length; i++) {
+                                                                            System.out.println(partidaAlmacenadaPuntaje[i]);
+                                                                        }
+                                                                         */
+                                                                        if (usuario.equals("") && estado.equals("") && puntajeObtenido == 0) {
+                                                                            System.out.println("No hay partidas guardadas");
+                                                                        } else {
+                                                                            System.out.println("Historial de Partidas");
+                                                                            System.out.println(usuario + " " + estado + " puntaje: " + puntajeObtenido);
+                                                                        }
+                                                                        sc.nextLine();
+                                                                        System.out.println("Presiona Enter para continuar");
+                                                                        sc.nextLine();//presionar enter y regresara
+                                                                        break;
+                                                                    case 3:
+                                                                        salirPausa = true;
+                                                                        salirTableroP = true;
+                                                                        estado = "RENUNCIA";
+                                                                        partidaAlmacenadaEstado[contadorEstado] = estado;
+                                                                        partidaAlmacenadaPuntaje[contadorPuntaje] = puntajeObtenido;
+                                                                        contadorNombre++;
+                                                                        contadorPuntaje++;
+
+                                                                        contadorEstado++;
+                                                                        break;
+                                                                    default:
+                                                                        System.out.println("Ingresa una opcion correcta");
+                                                                }
+                                                            } catch (Exception e) {
+                                                                System.out.println("Debes insertar un número");
+                                                                sc.next();
+                                                            }
+                                                        }
+
+                                                        //salirIniciarJuego = true;
+                                                        break;
+                                                    default:
+
+                                                        System.out.println("Elige una opcion correcta");
+
+                                                }
+                                                //Perdiendo Vidas
+                                                if (tableroP[posActualPacX][posActualPacY].equals(FANTASMA)) {
+                                                    vidas--;
+                                                }
+                                                if (vidas == 0) {
+                                                    System.out.println("=======================");
+                                                    System.out.println("      HAS PERDIDO      ");
+                                                    System.out.println("   SUERTE LA PROXIMA   ");
+                                                    System.out.println("=======================");
+                                                    System.out.println("");
+                                                    System.out.println("");
+                                                    estado = "DERROTA";
+                                                    partidaAlmacenadaEstado[contadorEstado] = estado;
+                                                    partidaAlmacenadaPuntaje[contadorPuntaje] = puntajeObtenido;
+                                                    contadorNombre++;
+                                                    contadorPuntaje++;
+
+                                                    contadorEstado++;
+                                                    salirTableroP = true;
+
+                                                }
+                                                //Ganando por premios
+                                                //PREMIO SIMPLE 10
+                                                //PREMIO ESPECIAL 15    
+
+                                                if (tableroP[posActualPacX][posActualPacY].equals(PREMIOSIMPLE)) {
+                                                    simpleP = simpleP + 10;
+                                                }
+                                                if (tableroP[posActualPacX][posActualPacY].equals(PREMIOESPECIAL)) {
+                                                    especialP = especialP + 15;
+                                                }
+                                                puntajeObtenido = simpleP + especialP;
+                                                if (puntajeObtenido == puntajeMaximoP) {
+
+                                                    System.out.println("=======================");
+                                                    System.out.println("      FELICIDADES      ");
+                                                    System.out.println("      HAS GANADO       ");
+                                                    System.out.println("      Puntaje: " + puntajeObtenido);
+                                                    System.out.println("=======================");
+                                                    System.out.println("");
+                                                    System.out.println("");
+                                                    estado = "VICTORIA";
+                                                    partidaAlmacenadaEstado[contadorEstado] = estado;
+                                                    partidaAlmacenadaPuntaje[contadorPuntaje] = puntajeObtenido;
+                                                    contadorNombre++;
+                                                    contadorPuntaje++;
+
+                                                    contadorEstado++;
+                                                    salirTableroP = true;
+                                                }
+                                                /// Fin premio Especial
+                                                if (estaDentroMatriz(tableroP.length, tableroP[0].length, posActualPacX, posActualPacY) && !tableroP[posActualPacX][posActualPacY].equals(PARED)) {
+
+                                                    tableroP[posActualPacX][posActualPacY] = PACMAN;
+                                                    tableroP[posAntiguaPacX][posAntiguaPacY] = " ";
+
+                                                    //} else if (estaDentroMatriz(tableroG.length, tableroG[0].length, posActualPacX, posActualPacY)) {
+                                                    //System.out.println("Te sales del tablero");
+                                                    // posActualPacX = posAntiguaPacX;
+                                                    // posActualPacY = posAntiguaPacY;
+                                                } else {
+                                                    posActualPacX = posAntiguaPacX;
+                                                    posActualPacY = posAntiguaPacY;
+                                                }
+
+                                            } catch (Exception e) {
+                                                System.out.println("Debes insertar una opcion valida");
+                                                sc.next();
+                                            }
+                                        }
                                         break;
+
                                     default:
                                         System.out.println("Ingrese G o P");
                                 }
@@ -392,16 +720,30 @@ public class Practica_PacMan {
                         break;
 
                     case 2:
-
-                        if (usuario.equals("") || estado.equals("")) {
+                        int matrizPartida[]=new int [contadorNombre];
+                        if (usuario.equals("") && estado.equals("") && puntajeObtenido == 0) {
                             System.out.println("No hay partidas guardadas");
                         } else {
-                            System.out.println("Historial de Partidas");
-                            System.out.println(usuario + " " + estado + " puntaje: " + puntajeObtenido);
+                            System.out.println("===============HISTORIAL DE PARTIDAS===============");
+                            System.out.println("No.  USUARIO           PUNTEO                ESTADO");
+                            for (int i = 0; i < matrizPartida.length; i++) {
+                            System.out.println(i+1 + "     "+partidaAlmacenadaNombre[i] + "               " + partidaAlmacenadaPuntaje[i]+"                   " + partidaAlmacenadaEstado[i] );
+                            }
+                                
+                            
+                            /*
+                            for (int i = matrizPartida.length; i > 0; i--) {
+                            System.out.println((i+1) + "  "+ partidaAlmacenadaNombre[matrizPartida.length] + "          " + partidaAlmacenadaPuntaje[matrizPartida.length]+"                " + partidaAlmacenadaEstado[matrizPartida.length] );
+                          
+                            */
+                            // System.out.println(usuario + " " + estado + " puntaje: " + puntajeObtenido);
                         }
+                        sc.nextLine();
+                        System.out.println("Presiona Enter para continuar");
+                        sc.nextLine();//presionar enter y regresara
 
-                        System.out.println("Historial de Partidas");
-                        System.out.println(usuario + " " + estado);
+                        //System.out.println("Historial de Partidas");
+                        //System.out.println(usuario + " " + estado);
                         break;
                     case 3:
 
