@@ -24,6 +24,8 @@ public class Practica_PacMan {
         boolean salirNumeroTrampas = false;
         boolean salirIniciarJuego = false;
         boolean salirIngresarPosicion = false;
+        boolean salirPausa = false;
+        int opcionMenuPausa;
         int opcion; //Guardaremos la opcion del usuario
         //char [][] tableroG = new char [12][12];
         //char [][] tableroP = new char[7][8];
@@ -31,7 +33,7 @@ public class Practica_PacMan {
         String[][] tableroP = new String[7][8];
         boolean[][] tableroG2 = new boolean[12][12];
         boolean[][] tableroP2 = new boolean[7][8];
-        String elegirTablero, usuario;
+        String elegirTablero, usuario = "";
         String respuesta;
         final String PACMAN = "<";
         final String FANTASMA = "@";
@@ -50,12 +52,23 @@ public class Practica_PacMan {
 
         int filaInicial = 0;
         int columnaInicial = 0;
-        
+
         int vidas = 3;
-        String estado;
+        String estado = ""; //gano, perdio o se rindiio
+        int puntajeObtenido = 0;
+        int[] partidaAlmacenadaPuntaje = new int[10];
+        String[] partidaAlmacenadaNombre = new String[10];
+        String[] partidaAlmacenadaEstado = new String[10];
+        int contadorPuntaje = 0;
+        int contadorNombre = 0;
+        int contadorEstado = 0;
+
         tableroG[posActualPacX][posActualPacY] = PACMAN;
 
         while (!salir) {
+            contadorPuntaje++;
+            contadorNombre++;
+            contadorEstado++;
 
             System.out.println("======= MENU PRINCIPAL ========");
             System.out.println("1. Iniciar Juego");
@@ -225,7 +238,8 @@ public class Practica_PacMan {
                                         boolean salirTableroG = false;
 
                                         while (!salirTableroG) {
-                                            int puntajeObtenido = simple + especial;
+                                            tableroG[posActualPacX][posActualPacY] = PACMAN;//Sirve para que vuelva a aparecer el pacman si se ingresa opcion erronea o al poner pausa yregresar
+                                            puntajeObtenido = simple + especial;
                                             System.out.println("Nombre del jugador: " + usuario);
                                             System.out.println("Numero de vidas: " + vidas);
                                             System.out.println("Puntaje:" + puntajeObtenido);
@@ -255,15 +269,52 @@ public class Practica_PacMan {
                                                         posActualPacY--;
                                                         break;
                                                     case "f":
-                                                        salirTableroG = true;
-                                                        
+                                                        salirPausa = false;
+                                                        while (!salirPausa) {
+                                                            System.out.println("============ PAUSA ============");
+                                                            System.out.println("Por favor, seleccione una opcion");
+                                                            System.out.println("1. Regresar");
+                                                            System.out.println("2. Ver Historial de Partidas");
+                                                            System.out.println("3. Terminar Partida");
+                                                            System.out.println("===============================");
+
+                                                            try {
+
+                                                                opcionMenuPausa = sc.nextInt();
+                                                                switch (opcionMenuPausa) {
+                                                                    case 1:
+                                                                        salirPausa = true;
+                                                                        break;
+                                                                    case 2:
+                                                                        for (int i = 0; i < partidaAlmacenadaPuntaje.length; i++) {
+                                                                            System.out.println("");
+                                                                            partidaAlmacenadaPuntaje[contadorPuntaje] = puntajeObtenido;
+
+                                                                        }
+                                                                        for (int i = 0; i < partidaAlmacenadaPuntaje.length; i++) {
+                                                                            System.out.println(partidaAlmacenadaPuntaje[i]);
+                                                                        }
+                                                                        break;
+                                                                    case 3:
+                                                                        salirPausa = true;
+                                                                        salirTableroG = true;
+                                                                        estado = "RENUNCIA";
+                                                                        break;
+                                                                    default:
+                                                                        System.out.println("Ingresa una opcion correcta");
+                                                                }
+                                                            } catch (Exception e) {
+                                                                System.out.println("Debes insertar un número");
+                                                                sc.next();
+                                                            }
+                                                        }
+
                                                         //salirIniciarJuego = true;
                                                         break;
                                                     default:
+
                                                         System.out.println("Elige una opcion correcta");
-                                                    //Al precionar otro numero desaparece el pacman
-                                                    //posAntiguaPacX = posActualPacX;
-                                                    //posAntiguaPacY = posActualPacY;
+
                                                 }
                                                 //Perdiendo Vidas
                                                 if (tableroG[posActualPacX][posActualPacY].equals(FANTASMA)) {
@@ -277,7 +328,7 @@ public class Practica_PacMan {
                                                     System.out.println("");
                                                     System.out.println("");
                                                     salirTableroG = true;
-                                                    estado="DERROTA";
+                                                    estado = "DERROTA";
                                                 }
                                                 //Ganando por premios
                                                 //PREMIO SIMPLE 10
@@ -338,35 +389,19 @@ public class Practica_PacMan {
                             }
                         }
 
-                        /*
-                         while (!salirIniciarJuego) {
-                            
-                                
-                                switch (sizeTablero) {
-                                    case "g":
-                                        
-                                        
-                                        break;
-                                    
-                                    case "p":
-                                      
-                                        break;
-                                    
-                                    default:
-                                        System.out.println("Ingrese G o P");
-                                }
-                                
-                            
-                            
-                        }
-                         */
-                        //UN OPCION TRUE AL TERMINAR LA EJECUCION PUEDE SERVIR?
                         break;
 
                     case 2:
 
-                        System.out.println("Historial de Partidas");
+                        if (usuario.equals("") || estado.equals("")) {
+                            System.out.println("No hay partidas guardadas");
+                        } else {
+                            System.out.println("Historial de Partidas");
+                            System.out.println(usuario + " " + estado + " puntaje: " + puntajeObtenido);
+                        }
 
+                        System.out.println("Historial de Partidas");
+                        System.out.println(usuario + " " + estado);
                         break;
                     case 3:
 
