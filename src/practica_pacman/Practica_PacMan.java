@@ -65,7 +65,7 @@ public class Practica_PacMan {
         int contadorPuntaje = 0;
         int contadorNombre = 0;
         int contadorEstado = 0;
-
+        int contadorHistorial = 0;
         tableroG[posActualPacX][posActualPacY] = PACMAN;
 
         while (!salir) {
@@ -85,9 +85,9 @@ public class Practica_PacMan {
                     case 1:
                         System.out.println("1. Iniciar Juego");
                         System.out.println("Ingrese nombre del usuario");
-                        usuario = sc.next();
+                        usuario = sc.next().trim();
                         partidaAlmacenadaNombre[contadorNombre] = usuario;
-                        System.out.println("======= Especificar Tablero ========");
+                        System.out.println("========= Especificar Tablero ==========");
 
                         String sizeTablero = "";
                         while (!sizeTablero.equals("g") && !sizeTablero.equals("p")) {
@@ -287,7 +287,26 @@ public class Practica_PacMan {
                                                                         salirPausa = true;
                                                                         break;
                                                                     case 2:
-                                                                        for (int i = 0; i < 10; i++) {
+                                                                        int matrizPartida[] = new int[contadorNombre];
+                                                                        if (usuario.equals("") && estado.equals("") && puntajeObtenido == 0) {
+                                                                            System.out.println("No hay partidas guardadas");
+                                                                        } else {
+
+                                                                            System.out.println("===============HISTORIAL DE PARTIDAS===============");
+                                                                            System.out.println("No.  USUARIO              PUNTEO              ESTADO");
+
+                                                                            contadorHistorial = 0;
+                                                                            for (int i = matrizPartida.length - 1; i > -1; i--) {
+                                                                                System.out.println((contadorHistorial + 1) + "     " + partidaAlmacenadaNombre[i] + "               " + partidaAlmacenadaPuntaje[i] + "                " + partidaAlmacenadaEstado[i]);
+                                                                                contadorHistorial++;
+                                                                            }
+
+                                                                        }
+                                                                        sc.nextLine();
+                                                                        System.out.println("Presiona Enter para continuar");
+                                                                        sc.nextLine();//presionar enter y regresara
+                                                                        /*
+                                                                         for (int i = 0; i < partidaAlmacenadaNombre.length; i++) {
                                                                             System.out.println(partidaAlmacenadaNombre[i]);
                                                                         }
                                                                         for (int i = 0; i < partidaAlmacenadaPuntaje.length; i++) {
@@ -298,6 +317,8 @@ public class Practica_PacMan {
                                                                         for (int i = 0; i < partidaAlmacenadaPuntaje.length; i++) {
                                                                             System.out.println(partidaAlmacenadaPuntaje[i]);
                                                                         }
+                                                                         */
+
                                                                         break;
                                                                     case 3:
                                                                         salirPausa = true;
@@ -378,19 +399,113 @@ public class Practica_PacMan {
                                                     salirTableroG = true;
                                                 }
                                                 /// Fin premio Especial
+                                                  if (tableroG[posActualPacX][posActualPacY].equals(FANTASMA) || tableroG[posActualPacX][posActualPacY].equals(PREMIOESPECIAL) || tableroG[posActualPacX][posActualPacY].equals(PREMIOSIMPLE) || tableroG[posActualPacX][posActualPacY].equals(" ")) {
+                                                    tableroG[posActualPacX][posActualPacY] = PACMAN;
+                                                    tableroG[posAntiguaPacX][posAntiguaPacY] = " ";
+                                                } else if (tableroG[posActualPacX][posActualPacY].equals(PARED)) {
+                                                    posActualPacX = posAntiguaPacX;
+                                                    posActualPacY = posAntiguaPacY;
+                                                } else if (tableroG[posActualPacX][posActualPacY].equals("|")) {
+                                                    if (posActualPacY == 11) {
+                                                        posActualPacY = 1;
+                                                        posActualPacY = posActualPacY;
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(FANTASMA)) {
+                                                            vidas--;
+                                                        }
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(PREMIOSIMPLE)) {
+                                                            simple = simple + 10;
+                                                        }
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(PREMIOESPECIAL)) {
+                                                            especial = especial + 15;
+                                                        }
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(PARED)) {
+                                                            posActualPacX = posAntiguaPacX;
+                                                            posActualPacY = posAntiguaPacY;
+                                                        } else {
+                                                            tableroG[posActualPacX][posActualPacY] = PACMAN;
+                                                            tableroG[posAntiguaPacX][posAntiguaPacY] = " ";
+                                                        }
+
+                                                    } else if (posActualPacY == 0) {
+                                                        posActualPacY = 10;
+                                                        posActualPacY = posActualPacY;
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(FANTASMA)) {
+                                                            vidas--;
+                                                        }
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(PREMIOSIMPLE)) {
+                                                            simple = simple + 10;
+                                                        }
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(PREMIOESPECIAL)) {
+                                                            especial = especial + 15;
+                                                        }
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(PARED)) {
+                                                            posActualPacX = posAntiguaPacX;
+                                                            posActualPacY = posAntiguaPacY;
+                                                        } else {
+                                                            tableroG[posActualPacX][posActualPacY] = PACMAN;
+                                                            tableroG[posAntiguaPacX][posAntiguaPacY] = " ";
+                                                        }
+                                                   
+                                                    }
+                                                }else if(tableroG[posActualPacX][posActualPacY].equals("-")){
+                                                    if (posActualPacX == 11) {
+                                                        posActualPacX = 1;
+                                                        posActualPacX = posActualPacX;
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(FANTASMA)) {
+                                                            vidas--;
+                                                        }
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(PREMIOSIMPLE)) {
+                                                            simple = simple + 10;
+                                                        }
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(PREMIOESPECIAL)) {
+                                                            especial = especial + 15;
+                                                        }
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(PARED)) {
+                                                            posActualPacX = posAntiguaPacX;
+                                                            posActualPacY = posAntiguaPacY;
+                                                        } else {
+                                                            tableroG[posActualPacX][posActualPacY] = PACMAN;
+                                                            tableroG[posAntiguaPacX][posAntiguaPacY] = " ";
+                                                        }
+
+                                                    } else if (posActualPacX == 0) {
+                                                        posActualPacX = 10;
+                                                        posActualPacX = posActualPacX;
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(FANTASMA)) {
+                                                            vidas--;
+                                                        }
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(PREMIOSIMPLE)) {
+                                                            simple = simple + 10;
+                                                        }
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(PREMIOESPECIAL)) {
+                                                            especial = especial + 15;
+                                                        }
+                                                        if (tableroG[posActualPacX][posActualPacY].equals(PARED)) {
+                                                            posActualPacX = posAntiguaPacX;
+                                                            posActualPacY = posAntiguaPacY;
+                                                        } else {
+                                                            tableroG[posActualPacX][posActualPacY] = PACMAN;
+                                                            tableroG[posAntiguaPacX][posAntiguaPacY] = " ";
+                                                        }
+                                                    
+                                                
+                                                }
+                                                    
+                                                }    
+                                                
+                                               /* esto sirve si no tiene que pasar de un extremo a otro
                                                 if (estaDentroMatriz(tableroG.length, tableroG[0].length, posActualPacX, posActualPacY) && !tableroG[posActualPacX][posActualPacY].equals(PARED)) {
 
                                                     tableroG[posActualPacX][posActualPacY] = PACMAN;
                                                     tableroG[posAntiguaPacX][posAntiguaPacY] = " ";
 
-                                                    //} else if (estaDentroMatriz(tableroG.length, tableroG[0].length, posActualPacX, posActualPacY)) {
-                                                    //System.out.println("Te sales del tablero");
-                                                    // posActualPacX = posAntiguaPacX;
-                                                    // posActualPacY = posAntiguaPacY;
+                                                   
                                                 } else {
                                                     posActualPacX = posAntiguaPacX;
                                                     posActualPacY = posAntiguaPacY;
                                                 }
+                                                */
+                                                
 
                                             } catch (Exception e) {
                                                 System.out.println("Debes insertar una opcion valida");
@@ -588,26 +703,26 @@ public class Practica_PacMan {
                                                                         salirPausa = true;
                                                                         break;
                                                                     case 2:
-
-                                                                        /*
-                                                                         for (int i = 0; i < partidaAlmacenadaPuntaje.length; i++) {
-                                                                            System.out.println("");
-                                                                            partidaAlmacenadaPuntaje[contadorPuntaje] = puntajeObtenido;
-
-                                                                        }
-                                                                        for (int i = 0; i < partidaAlmacenadaPuntaje.length; i++) {
-                                                                            System.out.println(partidaAlmacenadaPuntaje[i]);
-                                                                        }
-                                                                         */
+                                                                        int matrizPartida[] = new int[contadorNombre];
                                                                         if (usuario.equals("") && estado.equals("") && puntajeObtenido == 0) {
                                                                             System.out.println("No hay partidas guardadas");
                                                                         } else {
-                                                                            System.out.println("Historial de Partidas");
-                                                                            System.out.println(usuario + " " + estado + " puntaje: " + puntajeObtenido);
+
+                                                                            System.out.println("===============HISTORIAL DE PARTIDAS===============");
+                                                                            System.out.println("No.  USUARIO              PUNTEO              ESTADO");
+
+                                                                            contadorHistorial = 0;
+                                                                            for (int i = matrizPartida.length - 1; i > -1; i--) {
+                                                                                System.out.println((contadorHistorial + 1) + "     " + partidaAlmacenadaNombre[i] + "               " + partidaAlmacenadaPuntaje[i] + "                " + partidaAlmacenadaEstado[i]);
+                                                                                contadorHistorial++;
+                                                                            }
+
                                                                         }
                                                                         sc.nextLine();
                                                                         System.out.println("Presiona Enter para continuar");
                                                                         sc.nextLine();//presionar enter y regresara
+                                                                      
+
                                                                         break;
                                                                     case 3:
                                                                         salirPausa = true;
@@ -687,61 +802,147 @@ public class Practica_PacMan {
                                                     salirTableroP = true;
                                                 }
                                                 /// Fin premio Especial
-                                                if (estaDentroMatriz(tableroP.length, tableroP[0].length, posActualPacX, posActualPacY) && !tableroP[posActualPacX][posActualPacY].equals(PARED)) {
-
+                                                if (tableroP[posActualPacX][posActualPacY].equals(FANTASMA) || tableroP[posActualPacX][posActualPacY].equals(PREMIOESPECIAL) || tableroP[posActualPacX][posActualPacY].equals(PREMIOSIMPLE) || tableroP[posActualPacX][posActualPacY].equals(" ")) {
                                                     tableroP[posActualPacX][posActualPacY] = PACMAN;
                                                     tableroP[posAntiguaPacX][posAntiguaPacY] = " ";
-
-                                                    //} else if (estaDentroMatriz(tableroG.length, tableroG[0].length, posActualPacX, posActualPacY)) {
-                                                    //System.out.println("Te sales del tablero");
-                                                    // posActualPacX = posAntiguaPacX;
-                                                    // posActualPacY = posAntiguaPacY;
-                                                } else {
+                                                } else if (tableroP[posActualPacX][posActualPacY].equals(PARED)) {
                                                     posActualPacX = posAntiguaPacX;
                                                     posActualPacY = posAntiguaPacY;
-                                                }
+                                                } else if (tableroP[posActualPacX][posActualPacY].equals("|")) {
+                                                    if (posActualPacY == 7) {
+                                                        posActualPacY = 1;
+                                                        posActualPacY = posActualPacY;
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(FANTASMA)) {
+                                                            vidas--;
+                                                        }
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(PREMIOSIMPLE)) {
+                                                            simpleP = simpleP + 10;
+                                                        }
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(PREMIOESPECIAL)) {
+                                                            especialP = especialP + 15;
+                                                        }
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(PARED)) {
+                                                            posActualPacX = posAntiguaPacX;
+                                                            posActualPacY = posAntiguaPacY;
+                                                        } else {
+                                                            tableroP[posActualPacX][posActualPacY] = PACMAN;
+                                                            tableroP[posAntiguaPacX][posAntiguaPacY] = " ";
+                                                        }
 
-                                            } catch (Exception e) {
+                                                    } else if (posActualPacY == 0) {
+                                                        posActualPacY = 6;
+                                                        posActualPacY = posActualPacY;
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(FANTASMA)) {
+                                                            vidas--;
+                                                        }
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(PREMIOSIMPLE)) {
+                                                            simpleP = simpleP + 10;
+                                                        }
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(PREMIOESPECIAL)) {
+                                                            especialP = especialP + 15;
+                                                        }
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(PARED)) {
+                                                            posActualPacX = posAntiguaPacX;
+                                                            posActualPacY = posAntiguaPacY;
+                                                        } else {
+                                                            tableroP[posActualPacX][posActualPacY] = PACMAN;
+                                                            tableroP[posAntiguaPacX][posAntiguaPacY] = " ";
+                                                        }
+                                                   
+                                                    }
+                                                }else if(tableroP[posActualPacX][posActualPacY].equals("-")){
+                                                    if (posActualPacX == 6) {
+                                                        posActualPacX = 1;
+                                                        posActualPacX = posActualPacX;
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(FANTASMA)) {
+                                                            vidas--;
+                                                        }
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(PREMIOSIMPLE)) {
+                                                            simpleP = simpleP + 10;
+                                                        }
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(PREMIOESPECIAL)) {
+                                                            especialP = especialP + 15;
+                                                        }
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(PARED)) {
+                                                            posActualPacX = posAntiguaPacX;
+                                                            posActualPacY = posAntiguaPacY;
+                                                        } else {
+                                                            tableroP[posActualPacX][posActualPacY] = PACMAN;
+                                                            tableroP[posAntiguaPacX][posAntiguaPacY] = " ";
+                                                        }
+
+                                                    } else if (posActualPacX == 0) {
+                                                        posActualPacX = 5;
+                                                        posActualPacX = posActualPacX;
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(FANTASMA)) {
+                                                            vidas--;
+                                                        }
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(PREMIOSIMPLE)) {
+                                                            simpleP = simpleP + 10;
+                                                        }
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(PREMIOESPECIAL)) {
+                                                            especialP = especialP + 15;
+                                                        }
+                                                        if (tableroP[posActualPacX][posActualPacY].equals(PARED)) {
+                                                            posActualPacX = posAntiguaPacX;
+                                                            posActualPacY = posAntiguaPacY;
+                                                        } else {
+                                                            tableroP[posActualPacX][posActualPacY] = PACMAN;
+                                                            tableroP[posAntiguaPacX][posAntiguaPacY] = " ";
+                                                        }
+                                                    
+                                                
+                                                }
+                                                    
+                                                }    
+
+                                                }catch (Exception e) {
                                                 System.out.println("Debes insertar una opcion valida");
                                                 sc.next();
                                             }
-                                        }
-                                        break;
+                                            }
+                                            break;
 
-                                    default:
+                                        
+                                default:
                                         System.out.println("Ingrese G o P");
                                 }
                             } catch (Exception e) {
                                 System.out.println("Debes insertar un número");
                                 sc.next();
                             }
-                        }
+                            }
 
-                        break;
+                            break;
 
-                    case 2:
-                        int matrizPartida[]=new int [contadorNombre];
+                        
+                case 2:
+                        int matrizPartida[] = new int[contadorNombre];
                         if (usuario.equals("") && estado.equals("") && puntajeObtenido == 0) {
                             System.out.println("No hay partidas guardadas");
                         } else {
+
                             System.out.println("===============HISTORIAL DE PARTIDAS===============");
-                            System.out.println("No.  USUARIO           PUNTEO                ESTADO");
-                            for (int i = 0; i < matrizPartida.length; i++) {
-                            System.out.println(i+1 + "     "+partidaAlmacenadaNombre[i] + "               " + partidaAlmacenadaPuntaje[i]+"                   " + partidaAlmacenadaEstado[i] );
+                            System.out.println("No.  USUARIO              PUNTEO              ESTADO");
+
+                            contadorHistorial = 0;
+                            for (int i = matrizPartida.length - 1; i > -1; i--) {                                
+                                System.out.println((contadorHistorial + 1) + "     " + partidaAlmacenadaNombre[i] + "               " + partidaAlmacenadaPuntaje[i] + "                " + partidaAlmacenadaEstado[i]);
+                                contadorHistorial++;
                             }
-                                
-                            
-                            /*
-                            for (int i = matrizPartida.length; i > 0; i--) {
-                            System.out.println((i+1) + "  "+ partidaAlmacenadaNombre[matrizPartida.length] + "          " + partidaAlmacenadaPuntaje[matrizPartida.length]+"                " + partidaAlmacenadaEstado[matrizPartida.length] );
-                          
-                            */
-                            // System.out.println(usuario + " " + estado + " puntaje: " + puntajeObtenido);
+
                         }
                         sc.nextLine();
                         System.out.println("Presiona Enter para continuar");
                         sc.nextLine();//presionar enter y regresara
 
+                        /*
+                             for (int i = 0; i < matrizPartida.length; i++) {
+                            System.out.println(i+1 + "     "+partidaAlmacenadaNombre[i] + "               " + partidaAlmacenadaPuntaje[i]+"                   " + partidaAlmacenadaEstado[i] );
+                            }  
+                          
+                         */
+                        // System.out.println(usuario + " " + estado + " puntaje: " + puntajeObtenido);
                         //System.out.println("Historial de Partidas");
                         //System.out.println(usuario + " " + estado);
                         break;
@@ -760,13 +961,15 @@ public class Practica_PacMan {
                 sc.next();
             }
 
-            //System.out.println("¿Quieres continuar? (S/N)");
-            //respuesta = sc.next().toLowerCase().trim();
-            //if (respuesta.charAt(0) == 'n') {
-            //  salir = true;
-            //}
+                //System.out.println("¿Quieres continuar? (S/N)");
+                //respuesta = sc.next().toLowerCase().trim();
+                //if (respuesta.charAt(0) == 'n') {
+                //  salir = true;
+                //}
+            }
         }
-    }
+
+    
 
     public static int generaNumeroRandom(int minimo, int maximo) {
         return (int) (Math.random() * (maximo - minimo + 1) + (minimo));
