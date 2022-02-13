@@ -209,9 +209,9 @@ public class Practica_PacMan {
                                             try {
                                                 System.out.println("Ingrese una posicion libre donde quiera comenzar");
                                                 System.out.println("Ingrese numero de fila");
-                                                filaInicial = sc.nextInt() + 1;
+                                                filaInicial = sc.nextInt(); //se sumaria 1 si fuera la matriz como tal filaInicial = sc.nextInt() +1
                                                 System.out.println("Ingrese numeo de columna");
-                                                columnaInicial = sc.nextInt() + 1;
+                                                columnaInicial = sc.nextInt(); //se sumaria 1 si fuera la matriz como tal filaInicial = sc.nextInt() +1
                                                 if (!tableroG[filaInicial][columnaInicial].equals(FANTASMA) && !tableroG[filaInicial][columnaInicial].equals(PARED) && !tableroG[filaInicial][columnaInicial].equals(PREMIOESPECIAL) && !tableroG[filaInicial][columnaInicial].equals(PREMIOSIMPLE) && !tableroG[filaInicial][columnaInicial].equals("-") && !tableroG[filaInicial][columnaInicial].equals("|")) {
                                                     posActualPacX = filaInicial;
                                                     posActualPacY = columnaInicial;
@@ -399,7 +399,7 @@ public class Practica_PacMan {
                                                     salirTableroG = true;
                                                 }
                                                 /// Fin premio Especial
-                                                  if (tableroG[posActualPacX][posActualPacY].equals(FANTASMA) || tableroG[posActualPacX][posActualPacY].equals(PREMIOESPECIAL) || tableroG[posActualPacX][posActualPacY].equals(PREMIOSIMPLE) || tableroG[posActualPacX][posActualPacY].equals(" ")) {
+                                                if (tableroG[posActualPacX][posActualPacY].equals(FANTASMA) || tableroG[posActualPacX][posActualPacY].equals(PREMIOESPECIAL) || tableroG[posActualPacX][posActualPacY].equals(PREMIOSIMPLE) || tableroG[posActualPacX][posActualPacY].equals(" ")) {
                                                     tableroG[posActualPacX][posActualPacY] = PACMAN;
                                                     tableroG[posAntiguaPacX][posAntiguaPacY] = " ";
                                                 } else if (tableroG[posActualPacX][posActualPacY].equals(PARED)) {
@@ -445,9 +445,9 @@ public class Practica_PacMan {
                                                             tableroG[posActualPacX][posActualPacY] = PACMAN;
                                                             tableroG[posAntiguaPacX][posAntiguaPacY] = " ";
                                                         }
-                                                   
+
                                                     }
-                                                }else if(tableroG[posActualPacX][posActualPacY].equals("-")){
+                                                } else if (tableroG[posActualPacX][posActualPacY].equals("-")) {
                                                     if (posActualPacX == 11) {
                                                         posActualPacX = 1;
                                                         posActualPacX = posActualPacX;
@@ -487,13 +487,12 @@ public class Practica_PacMan {
                                                             tableroG[posActualPacX][posActualPacY] = PACMAN;
                                                             tableroG[posAntiguaPacX][posAntiguaPacY] = " ";
                                                         }
-                                                    
-                                                
+
+                                                    }
+
                                                 }
-                                                    
-                                                }    
-                                                
-                                               /* esto sirve si no tiene que pasar de un extremo a otro
+
+                                                /* esto sirve si no tiene que pasar de un extremo a otro
                                                 if (estaDentroMatriz(tableroG.length, tableroG[0].length, posActualPacX, posActualPacY) && !tableroG[posActualPacX][posActualPacY].equals(PARED)) {
 
                                                     tableroG[posActualPacX][posActualPacY] = PACMAN;
@@ -504,9 +503,7 @@ public class Practica_PacMan {
                                                     posActualPacX = posAntiguaPacX;
                                                     posActualPacY = posAntiguaPacY;
                                                 }
-                                                */
-                                                
-
+                                                 */
                                             } catch (Exception e) {
                                                 System.out.println("Debes insertar una opcion valida");
                                                 sc.next();
@@ -630,9 +627,9 @@ public class Practica_PacMan {
                                             try {
                                                 System.out.println("Ingrese una posicion libre donde quiera comenzar");
                                                 System.out.println("Ingrese numero de fila");
-                                                filaInicial = sc.nextInt() + 1;
+                                                filaInicial = sc.nextInt(); //se sumaria 1 si fuera la matriz como tal filaInicial = sc.nextInt() +1
                                                 System.out.println("Ingrese numeo de columna");
-                                                columnaInicial = sc.nextInt() + 1;
+                                                columnaInicial = sc.nextInt(); //se sumaria 1 si fuera la matriz como tal filaInicial = sc.nextInt() +1
                                                 if (!tableroP[filaInicial][columnaInicial].equals(FANTASMA) && !tableroP[filaInicial][columnaInicial].equals(PARED) && !tableroP[filaInicial][columnaInicial].equals(PREMIOESPECIAL) && !tableroP[filaInicial][columnaInicial].equals(PREMIOSIMPLE) && !tableroP[filaInicial][columnaInicial].equals("-") && !tableroP[filaInicial][columnaInicial].equals("|")) {
                                                     posActualPacX = filaInicial;
                                                     posActualPacY = columnaInicial;
@@ -721,7 +718,6 @@ public class Practica_PacMan {
                                                                         sc.nextLine();
                                                                         System.out.println("Presiona Enter para continuar");
                                                                         sc.nextLine();//presionar enter y regresara
-                                                                      
 
                                                                         break;
                                                                     case 3:
@@ -848,9 +844,9 @@ public class Practica_PacMan {
                                                             tableroP[posActualPacX][posActualPacY] = PACMAN;
                                                             tableroP[posAntiguaPacX][posAntiguaPacY] = " ";
                                                         }
-                                                   
+
                                                     }
-                                                }else if(tableroP[posActualPacX][posActualPacY].equals("-")){
+                                                } else if (tableroP[posActualPacX][posActualPacY].equals("-")) {
                                                     if (posActualPacX == 6) {
                                                         posActualPacX = 1;
                                                         posActualPacX = posActualPacX;
@@ -890,33 +886,30 @@ public class Practica_PacMan {
                                                             tableroP[posActualPacX][posActualPacY] = PACMAN;
                                                             tableroP[posAntiguaPacX][posAntiguaPacY] = " ";
                                                         }
-                                                    
-                                                
-                                                }
-                                                    
-                                                }    
 
-                                                }catch (Exception e) {
+                                                    }
+
+                                                }
+
+                                            } catch (Exception e) {
                                                 System.out.println("Debes insertar una opcion valida");
                                                 sc.next();
                                             }
-                                            }
-                                            break;
+                                        }
+                                        break;
 
-                                        
-                                default:
+                                    default:
                                         System.out.println("Ingrese G o P");
                                 }
                             } catch (Exception e) {
                                 System.out.println("Debes insertar un número");
                                 sc.next();
                             }
-                            }
+                        }
 
-                            break;
+                        break;
 
-                        
-                case 2:
+                    case 2:
                         int matrizPartida[] = new int[contadorNombre];
                         if (usuario.equals("") && estado.equals("") && puntajeObtenido == 0) {
                             System.out.println("No hay partidas guardadas");
@@ -926,7 +919,7 @@ public class Practica_PacMan {
                             System.out.println("No.  USUARIO              PUNTEO              ESTADO");
 
                             contadorHistorial = 0;
-                            for (int i = matrizPartida.length - 1; i > -1; i--) {                                
+                            for (int i = matrizPartida.length - 1; i > -1; i--) {
                                 System.out.println((contadorHistorial + 1) + "     " + partidaAlmacenadaNombre[i] + "               " + partidaAlmacenadaPuntaje[i] + "                " + partidaAlmacenadaEstado[i]);
                                 contadorHistorial++;
                             }
@@ -961,15 +954,13 @@ public class Practica_PacMan {
                 sc.next();
             }
 
-                //System.out.println("¿Quieres continuar? (S/N)");
-                //respuesta = sc.next().toLowerCase().trim();
-                //if (respuesta.charAt(0) == 'n') {
-                //  salir = true;
-                //}
-            }
+            //System.out.println("¿Quieres continuar? (S/N)");
+            //respuesta = sc.next().toLowerCase().trim();
+            //if (respuesta.charAt(0) == 'n') {
+            //  salir = true;
+            //}
         }
-
-    
+    }
 
     public static int generaNumeroRandom(int minimo, int maximo) {
         return (int) (Math.random() * (maximo - minimo + 1) + (minimo));
